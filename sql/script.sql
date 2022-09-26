@@ -58,3 +58,36 @@ CREATE TABLE MONTER(
     CONSTRAINT fk_monter_clients FOREIGN KEY (IdC) REFERENCES CLIENTS(IdC),
     CONSTRAINT fk_monter_poneys FOREIGN KEY (IdP) REFERENCES PONEYS(IdP)
 );
+
+-- TRIGGER --
+
+delimiter |
+
+CREATE or REPLACE trigger repos_poney_I before insert on MONTER for each row
+begin
+    declare mes varchar(100);
+    declare last_sortie datetime;
+    declare new_sortie datetime;
+    select max(DateSortie) into last_sortie from SORTIES natural join MONTER where idP = new.idP;
+    select max(DateSortie) into new_sortie from SORTIES natural join MONTER where idP = new.idP and SORTIES.IdS = new.IdS;
+    if TIMESTAMPDIFF(hour, last_sortie, new_sortie) < 1 then
+        set mes = concat ('Le poney a besoin de plus de repos');
+        signal SQLSTATE '45000' set MESSAGE_TEXT = mes;
+    end if;
+end |
+
+CREATE or REPLACE trigger repos_poney_U before update on MONTER for each row
+begin
+    declare mes varchar(100);
+    declare last_sortie datetime;
+    declare new_sortie datetime;
+    select max(DateSortie) into last_sortie from SORTIES natural join MONTER where idP = new.idP;
+    select max(DateSortie) into new_sortie from SORTIES natural join MONTER where idP = new.idP and SORTIES.IdS = new.IdS;
+    if TIMESTAMPDIFF(hour, last_sortie, new_sortie) < 1 then
+        set mes = concat ('Le poney a besoin de plus de repos');
+        signal SQLSTATE '45000' set MESSAGE_TEXT = mes;
+    end if;
+end |
+
+
+delimiter ;
