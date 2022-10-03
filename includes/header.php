@@ -11,7 +11,13 @@
 
     <body>
         <header>
-            <div>
+            <nav id="navigation_menu">
+                <p><a href="">Accueil</a></p>
+                <p><a href="">Accueil</a></p>
+                <p><a href="">Accueil</a></p>
+                <p><a href="">Accueil</a></p>
+            </nav>
+            <div id="infos">
                 <img src="includes/img/logo.png" alt="logo"/>
                 <div>
                     <h1>Grand Galop</h1>
@@ -19,11 +25,3 @@
                 </div>
             </div>
         </header>
-
-        <nav id="navigation_menu">
-            <p><a href="">Accueil</a></p>
-            <p><a href="">Accueil</a></p>
-            <p><a href="">Accueil</a></p>
-            <p><a href="">Accueil</a></p>
-        </nav>
-        <div id="header_shadow"></div>
