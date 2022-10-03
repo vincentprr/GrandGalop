@@ -2,7 +2,7 @@
 
 <html lang="fr">
     <head>
-        <title>Grand Galop<?php echo (isset($page) ? " - ". $page : "")?></title>
+        <title>Grand Galop<?php echo isset($page) ? " - ". $page : ""?></title>
         <meta charset="UTF-8"/>
         <link rel="icon" type="image/png" href="includes/img/logo.png"/>
         <link rel="stylesheet" href="includes/css/style.css"/>
@@ -26,3 +26,4 @@
             <p><a href="">Accueil</a></p>
             <p><a href="">Accueil</a></p>
         </nav>
+        <div id="header_shadow"></div>
