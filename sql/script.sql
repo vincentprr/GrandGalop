@@ -42,7 +42,7 @@ CREATE TABLE ACTIVITES(
 );
 
 CREATE TABLE SORTIES(
-    IdS int primary key,
+    IdS int primary key auto_increment,
     IdA int not null,
     IdM int not null,
     DateSortie datetime not null,
@@ -87,6 +87,20 @@ begin
         set mes = concat ('Le poney a besoin de plus de repos');
         signal SQLSTATE '45000' set MESSAGE_TEXT = mes;
     end if;
+end |
+
+CREATE or REPLACE trigger max_client_sortie before insert on MONTER for each row
+begin
+  declare max_client int;
+  declare id_activite int;
+  declare nb_clients int;
+  declare mes varchar(100);
+  select MaxClients, IdA into max_client, id_activite from ACTIVITES;
+  select count(IdC) into nb_clients from MONTER natural join SORTIES where IdA = id_activite;
+  if max_client_sortie < nb_clients then
+    set mes = concat('Trop de personne inscrite pour cette activite');
+    signal SQLSTATE '45000' set MESSAGE_TEXT = mes;
+  end if;
 end |
 
 
