@@ -6,7 +6,6 @@
         <meta charset="UTF-8"/>
         <link rel="icon" type="image/png" href="includes/img/logo.png"/>
         <link rel="stylesheet" href="includes/css/style.css"/>
-        <script src="includes/js/main.js"></script>
     </head>
 
     <body>

@@ -84,3 +84,9 @@ header h2{
 #content h1{
     line-height: 2em;
 }
+
+/* Dynamic */
+.fade-out{
+    opacity: 0;
+    transition: opacity 0.3s;
+}
