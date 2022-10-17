@@ -68,8 +68,8 @@ begin
     declare mes varchar(100);
     declare last_sortie datetime;
     declare new_sortie datetime;
-    select max(DateSortie) into last_sortie from SORTIES natural join MONTER where idP = new.idP;
-    select max(DateSortie) into new_sortie from SORTIES natural join MONTER where idP = new.idP and SORTIES.IdS = new.IdS;
+    select max(DateSortie) into last_sortie from SORTIES natural join MONTER where IdP = new.IdP;
+    select max(DateSortie) into new_sortie from SORTIES natural join MONTER where IdP = new.IdP and SORTIES.IdS = new.IdS;
     if TIMESTAMPDIFF(hour, last_sortie, new_sortie) < 1 then
         set mes = concat ('Le poney a besoin de plus de repos');
         signal SQLSTATE '45000' set MESSAGE_TEXT = mes;
@@ -81,8 +81,8 @@ begin
     declare mes varchar(100);
     declare last_sortie datetime;
     declare new_sortie datetime;
-    select max(DateSortie) into last_sortie from SORTIES natural join MONTER where idP = new.idP;
-    select max(DateSortie) into new_sortie from SORTIES natural join MONTER where idP = new.idP and SORTIES.IdS = new.IdS;
+    select max(DateSortie) into last_sortie from SORTIES natural join MONTER where IdP = new.IdP;
+    select max(DateSortie) into new_sortie from SORTIES natural join MONTER where IdP = new.IdP and SORTIES.IdS = new.IdS;
     if TIMESTAMPDIFF(hour, last_sortie, new_sortie) < 1 then
         set mes = concat ('Le poney a besoin de plus de repos');
         signal SQLSTATE '45000' set MESSAGE_TEXT = mes;
@@ -95,9 +95,10 @@ begin
   declare id_activite int;
   declare nb_clients int;
   declare mes varchar(100);
-  select MaxClients, IdA into max_client, id_activite from ACTIVITES;
+  select MaxClients into max_client from ACTIVITES natural join SORTIES where IdS = new.IdS;
+  select IdA into id_activite from ACTIVITES natural join SORTIES where IdS = new.IdS;
   select count(IdC) into nb_clients from MONTER natural join SORTIES where IdA = id_activite;
-  if max_client_sortie < nb_clients then
+  if max_client < nb_clients then
     set mes = concat('Trop de personne inscrite pour cette activite');
     signal SQLSTATE '45000' set MESSAGE_TEXT = mes;
   end if;
