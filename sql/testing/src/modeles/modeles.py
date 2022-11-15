@@ -1,1 +1,1 @@
-from . import client
+from . import client, moniteur, poney, type_activite
