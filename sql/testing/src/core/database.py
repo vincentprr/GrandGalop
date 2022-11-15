@@ -1,4 +1,5 @@
-import sqlalchemy
+from sqlalchemy import create_engine
+from sqlalchemy.orm import declarative_base
 from .constant import DATABASE_USER, DATABASE_IP, DATABASE_PASSWORD, DATBASE_NAME
 
 def create_connection():
@@ -13,10 +14,13 @@ def create_connection():
     """
     try:
         #creation de l'objet gérant les interactions avec le serveur de BD
-        engine=sqlalchemy.create_engine('mysql://'+ DATABASE_USER +':'+ DATABASE_PASSWORD +'@'+ DATABASE_IP +'/'+ DATBASE_NAME)
+        engine = create_engine('mysql://'+ DATABASE_USER +':'+ DATABASE_PASSWORD +'@'+ DATABASE_IP +'/'+ DATBASE_NAME)
         #creation de la connexion
         cnx = engine.connect()
     except Exception as err:
         print(err)
         raise err
     return cnx
+
+db = create_connection()
+Base = declarative_base()

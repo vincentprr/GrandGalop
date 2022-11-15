@@ -1,6 +1,6 @@
-from core.database import create_connection
+from core.database import db, Base
+from modeles import modeles
 
 if __name__ == "__main__":
-    db = create_connection()
-
+    Base.metadata.create_all(db)
     db.close()
