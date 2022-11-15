@@ -104,5 +104,17 @@ begin
   end if;
 end |
 
+CREATE or REPLACE trigger check_cotisation before insert on MONTER for each row
+begin
+  declare date_now date;
+  declare date_cotisation date;
+  declare mes varchar(100);
+  set date_now = CURDATE();
+  select DateCotisation into date_cotisation from CLIENTS natural join MONTER where MONTER.IdC = new.IdC;
+  if TIMESTAMPDIFF(year, date_cotisation, date_now) > 1 then
+    set mes = concat('Problème de cotisation');
+    signal SQLSTATE '45000' set MESSAGE_TEXT = mes;
+  end if;
+end |
 
 delimiter ;
