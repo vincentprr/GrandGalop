@@ -37,7 +37,7 @@ CREATE TABLE ACTIVITES(
     NomA varchar(50) not null,
     DescriptionA varchar(255),
     IdTa int unsigned not null,
-    MaxClients tinyint not null check(MaxClients > 0 and MaxClients < 11),
+    MaxClients tinyint unsigned not null check(MaxClients > 0 and MaxClients < 11),
     CONSTRAINT fk_activites_typesactivite FOREIGN KEY (IdTa) REFERENCES TYPESACTIVITE(IdTa)
 );
 
