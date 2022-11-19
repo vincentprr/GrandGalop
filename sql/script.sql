@@ -53,12 +53,13 @@ CREATE TABLE SORTIES(
 );
 
 CREATE TABLE MONTER(
-    IdS int unsigned not null primary key,
-    IdC int unsigned not null primary key,
-    IdP int unsigned not null primary key,
+    IdS int unsigned not null,
+    IdC int unsigned not null,
+    IdP int unsigned not null,
     CONSTRAINT fk_monter_sorties FOREIGN KEY (IdS) REFERENCES SORTIES(IdS),
     CONSTRAINT fk_monter_clients FOREIGN KEY (IdC) REFERENCES CLIENTS(IdC),
-    CONSTRAINT fk_monter_poneys FOREIGN KEY (IdP) REFERENCES PONEYS(IdP)
+    CONSTRAINT fk_monter_poneys FOREIGN KEY (IdP) REFERENCES PONEYS(IdP),
+    primary key (IdS, IdC, IdP)
 );
 
 -- TRIGGER --
