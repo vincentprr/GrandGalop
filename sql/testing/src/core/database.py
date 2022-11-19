@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import declarative_base, sessionmaker
 from .constant import DATABASE_USER, DATABASE_IP, DATABASE_PASSWORD, DATBASE_NAME
 
 def create_connection():
@@ -14,13 +14,12 @@ def create_connection():
     """
     try:
         #creation de l'objet gérant les interactions avec le serveur de BD
-        engine = create_engine('mysql://'+ DATABASE_USER +':'+ DATABASE_PASSWORD +'@'+ DATABASE_IP +'/'+ DATBASE_NAME)
-        #creation de la connexion
-        cnx = engine.connect()
+        cnx = create_engine('mysql://'+ DATABASE_USER +':'+ DATABASE_PASSWORD +'@'+ DATABASE_IP +'/'+ DATBASE_NAME)
     except Exception as err:
         print(err)
         raise err
     return cnx
 
 db = create_connection()
+session = sessionmaker()(bind=db)
 Base = declarative_base()
