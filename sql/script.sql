@@ -21,7 +21,7 @@ CREATE TABLE MONITEURS(
 CREATE TABLE PONEYS(
     IdP int unsigned primary key not null auto_increment,
     NomP varchar(200) not null,
-    ChargeMax int not null, -- en grammes
+    ChargeMax int unsigned not null, -- en grammes
     dateNaissanceP date not null,
     tailleP smallint unsigned not null, -- taille en cm
     imgP longblob
@@ -51,9 +51,9 @@ CREATE TABLE SORTIES(
 );
 
 CREATE TABLE MONTER(
-    IdS int unsigned not null,
-    IdC int unsigned not null,
-    IdP int unsigned not null,
+    IdS int unsigned not null primary key,
+    IdC int unsigned not null primary key,
+    IdP int unsigned not null primary key,
     CONSTRAINT fk_monter_sorties FOREIGN KEY (IdS) REFERENCES SORTIES(IdS),
     CONSTRAINT fk_monter_clients FOREIGN KEY (IdC) REFERENCES CLIENTS(IdC),
     CONSTRAINT fk_monter_poneys FOREIGN KEY (IdP) REFERENCES PONEYS(IdP)
