@@ -20,18 +20,25 @@ insert into TYPESACTIVITE (NomTa) values
 ("initiation");
 
 insert into ACTIVITES (NomA, DescriptionA, IdTa, MaxClients) values
-("Balade en foret", "petite en foret pour tout les ages", 1, 10),
+("Balade en foret", "petite balade en foret pour tout les ages", 1, 10),
 ("cours de saut", "apprendre à faire des sout à cheval", 2, 5),
 ("premiere fois", "initiation à l'équitation pour les débutants", 3, 6);
 
-insert into SORTIES (IdA, IdM, DateSortie) values
-(1, 2, '2022-11-10 10:30:01'),
-(2, 1, '2022-12-11 14:00:00'),
-(3, 1, '2023-03-20 09:15:00');
+insert into SORTIES (IdA, DateSortie, DureeSortie) values
+(1, '2022-11-10 10:30:01', 180),
+(2, '2022-12-11 14:00:00', 150),
+(3, '2023-03-20 09:15:00', 120);
 
-insert into MONTER (IdS, IdC, IdP) values
-(1, 1, 3),
-(1, 2, 2),
+insert into ENCADRER (idM, idS) values
+(1, 1),
+(2, 1),
+(1, 2),
+(2, 3);
+
+insert into MONTER (IdS, IdC, IdP) values 
+(1, 1, 2),
+(1, 5, 3),
 (2, 3, 1),
-(2, 5, 3),
-(3, 4, 1);
+(2, 2, 2),
+(2, 4, 3),
+(3, 4, 2);
