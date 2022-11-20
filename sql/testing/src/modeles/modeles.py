@@ -1,1 +1,1 @@
-from . import client, moniteur, poney, sortie, type_activite, activite, monter
+from . import client, moniteur, poney, sortie, type_activite, activite, monter, encadrer
