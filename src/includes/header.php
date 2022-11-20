@@ -11,10 +11,10 @@
     <body>
         <header>
             <nav id="navigation_menu">
-                <p><a href="">Accueil</a></p>
-                <p><a href="">Accueil</a></p>
-                <p><a href="">Accueil</a></p>
-                <p><a href="">Accueil</a></p>
+                <a href="">Accueil</a>
+                <a href="">Accueil</a>
+                <a href="">Accueil</a> 
+                <a href="">Accueil</a>
             </nav>
             <div id="infos">
                 <img src="includes/img/logo.png" alt="logo"/>

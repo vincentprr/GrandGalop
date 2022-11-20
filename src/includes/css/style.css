@@ -57,24 +57,20 @@ header h2{
 }
 
 #navigation_menu > *{
-    width: 8em;
-    display: flex;
+    width: 5%;
     text-align: center;
-    align-items: center;
-    justify-content: center;
     height: inherit;
     transition: background 0.25s;
     color: white;
     height: fit-content;
+    padding: 4px;
+    margin: 0 15px;
+    border-radius: 3px;
 }
 
 #navigation_menu > *:hover{
     background:rgb(28, 27, 32);
     color: white;
-}
-
-#navigation_menu > * > *{
-    padding: 0.4em 0.8em;
 }
 
 #content{
