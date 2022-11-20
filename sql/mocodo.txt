@@ -1,0 +1,15 @@
+MONITEURS : IdM, PrenomM, nomM, TelephoneM
+ENCADRER, 0N MONITEURS, 0N SORTIES
+SORTIES : IdS, DateSortie, DureeSortie
+
+CLIENTS : IdC, EmailC, MotDePasseC, PrenomC, NomC, TelephoneC, AdresseC, DateCotisation
+MONTER, 0N CLIENTS, 0N SORTIES, 0N PONEYS
+COMPOSER, 0N ACTIVITES, 11 SORTIES
+
+:
+PONEYS : IdP, NomP, ChargeMax, dateNaissanceP, tailleP, imgP
+ACTIVITES : IdA, NomA, DescriptionA, MaxClients
+
+:
+TYPESACTIVITE : IdTa, NomTa
+AVOIR, 0N TYPESACTIVITE, 11 ACTIVITES
