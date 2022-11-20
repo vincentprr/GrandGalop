@@ -1,10 +1,10 @@
 from core.database import Base
-from sqlalchemy import Column, ForeignKey, Table
+from sqlalchemy import Column, DateTime, ForeignKey, Table
+from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.mysql import INTEGER
 
-Encadrer = Table(
-    "ENCADRER",
-    Base.metadata,
-    Column("IdS", INTEGER(unsigned=True), ForeignKey("SORTIES.IdS"), nullable=True),
-    Column("IdM", INTEGER(unsigned=True), ForeignKey("MONITEURS.IdM"), nullable=True)
-)
+class Encadrer(Base):
+    __tablename__ = "ENCADRER"
+
+    id_moniteur = Column("IdM", INTEGER(unsigned=True), ForeignKey("MONITEURS.IdM"), primary_key=True, nullable=True)
+    id_sortie = Column("IdS", INTEGER(unsigned=True), ForeignKey("SORTIES.IdS"), primary_key=True, nullable=True)

@@ -7,6 +7,7 @@ from modeles.type_activite import TypeActivite
 from modeles.activite import Activite
 from modeles.sortie import Sortie
 from modeles.monter import Monter
+from modeles.encadrer import Encadrer
 
 from datetime import datetime
 from modeles import modeles
@@ -112,21 +113,41 @@ def create_sortie(session):
             moniteurs = session.query(Moniteur).all()
 
             if len(moniteurs) > 0:
-                print("-- Moniteur --")
-                for moniteur in moniteurs:
-                    print(str(moniteur.id) +" - "+ moniteur.nom +" "+ moniteur.prenom)
+                print("-- Moniteurs disponibles --")
+                process = True
+                ids_moniteurs = set()
+                while process:
+                    for moniteur in moniteurs:
+                        if moniteur.id not in ids_moniteurs:
+                            print(str(moniteur.id) +" - "+ moniteur.nom +" "+ moniteur.prenom)
                 
-                id_moniteur= int(input("Votre choix : "))
+                    response = input("Spécifiez 'end' pour confirmer vos choix. Votre choix : ")
+
+                    if response == "end":
+                        process = False
+                    else:
+                        id_moniteur = int(response)
+                        if id_moniteur not in ids_moniteurs and session.query(Moniteur).filter(Moniteur.id == id_moniteur).first() != None:
+                            ids_moniteurs.add(id_moniteur)
+                        else:
+                            print("Le moniteur sélectionné n'existe pas ou est déjà encadrant...")
 
                 if session.query(Moniteur).filter(Moniteur.id == id_moniteur).first() != None:
-                    session.add(Sortie(
+                    sortie = Sortie(
                         id_activite=id_activite,
-                        id_moniteur=id_moniteur,
-                        date_sortie=datetime.utcnow()
-                    ))
+                        date_sortie=datetime.utcnow(),
+                        duree_sortie=int(input("Durée de la sortie (min) : "))
+                    )
+                    session.add(sortie)
+                    session.commit()
+                    for id_moniteur in ids_moniteurs:
+                        session.add(Encadrer(
+                            id_moniteur = id_moniteur,
+                            id_sortie = sortie.id
+                        ))
                     session.commit()
                 else:
-                    print("Le moniteur sélectionné n'existe pas...")
+                    print("Aucuns moniteurs sélectionnés...")
             else:
                 print("Il n'y a aucun moniteurs...")
         else:

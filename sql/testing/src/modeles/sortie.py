@@ -2,7 +2,6 @@ from core.database import Base
 from sqlalchemy import Column, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.mysql import INTEGER
-from .encadrer import Encadrer
 
 class Sortie(Base):
     __tablename__ = "SORTIES"
@@ -12,4 +11,4 @@ class Sortie(Base):
     activite = relationship("Activite")
     date_sortie = Column("DateSortie", DateTime, nullable=False)
     duree_sortie = Column("DureeSortie", INTEGER(unsigned=True), nullable=False)
-    moniteurs = relationship("Moniteur", secondary=Encadrer)
+    moniteurs = relationship("Moniteur", secondary='ENCADRER')
