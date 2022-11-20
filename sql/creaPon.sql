@@ -42,11 +42,17 @@ CREATE TABLE ACTIVITES(
 CREATE TABLE SORTIES(
     IdS int unsigned primary key auto_increment,
     IdA int unsigned not null,
-    IdM int unsigned not null,
     DateSortie datetime not null,
     DureeSortie int not null, -- duree en minutes
-    CONSTRAINT fk_sorties_activites FOREIGN KEY (IdA) REFERENCES ACTIVITES(IdA),
-    CONSTRAINT fk_sorties_moniteurs FOREIGN KEY (IdM) REFERENCES MONITEURS(IdM)
+    CONSTRAINT fk_sorties_activites FOREIGN KEY (IdA) REFERENCES ACTIVITES(IdA)
+);
+
+CREATE TABLE ENCADRER(
+    IdM int unsigned,
+    IdS int unsigned,
+    CONSTRAINT fk_encadrer_sorties FOREIGN KEY (IdS) REFERENCES SORTIES(IdS),
+    CONSTRAINT fk_encadrer_moniteurs FOREIGN KEY (IdM) REFERENCES MONITEURS(IdM),
+    primary key (IdM, IdS)
 );
 
 CREATE TABLE MONTER(
