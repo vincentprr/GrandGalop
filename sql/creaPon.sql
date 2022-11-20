@@ -43,7 +43,7 @@ CREATE TABLE SORTIES(
     IdS int unsigned primary key auto_increment,
     IdA int unsigned not null,
     DateSortie datetime not null,
-    DureeSortie int not null, -- duree en minutes
+    DureeSortie int unsigned not null, -- duree en minutes
     CONSTRAINT fk_sorties_activites FOREIGN KEY (IdA) REFERENCES ACTIVITES(IdA)
 );
 
