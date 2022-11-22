@@ -123,4 +123,15 @@ begin
   end if;
 end |
 
+CREATE or replace trigger check_monter_for_encadrant before insert on MONTER for each row
+begin
+  declare mes varchar(100);
+  declare nb_encadre int;
+  select count(IdM) into nb_encadre from ENCADRER natural join SORTIES where IdS = new.IdS;
+  if nb_encadre < 1 then
+    set mes = concat('Il faut au moins un encadrant pour la sortie');
+    signal SQLSTATE '45000' set MESSAGE_TEXT = mes;
+  end if;
+end |
+
 delimiter ;
