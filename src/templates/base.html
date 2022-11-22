@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Grand Galop{{ " - "+ title if title != None else "" }}</title>
+        <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/logo.png') }}"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"/>
+    </head>
+    <body>
+        {% block content %}{% endblock %}
+        <script src="includes/js/main.js"></script>
+    </body>
+</html>
