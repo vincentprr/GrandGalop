@@ -1,3 +1,5 @@
-<div onclick="closePopUp()" id="popup">
-    <div></div>
+<div onclick="closePopUp(event)" id="popup">
+    <div id="popup_content" onclick="event.stopPropagation()">
+        
+    </div>
 </div>
