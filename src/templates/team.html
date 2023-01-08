@@ -4,61 +4,37 @@
 <main>
     <section>
         <article class="team_cards">
-            <div class="card">
-                <div class="card-info">
-                    <img class="card-avatar" src="{{ url_for('static', filename='img/team_faces/john_doe.jpg') }}" alt="John Doe's face">
-                    <div class="card-title">John Doe</div>
-                    <div class="card-subtitle">Fondateur</div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-info">
-                    <img class="card-avatar" src="{{ url_for('static', filename='img/team_faces/john_doe.jpg') }}" alt="John Doe's face">
-                    <div class="card-title">John Doe</div>
-                    <div class="card-subtitle">Fondateur</div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-info">
-                    <img class="card-avatar" src="{{ url_for('static', filename='img/team_faces/john_doe.jpg') }}" alt="John Doe's face">
-                    <div class="card-title">John Doe</div>
-                    <div class="card-subtitle">Fondateur</div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-info">
-                    <img class="card-avatar" src="{{ url_for('static', filename='img/team_faces/john_doe.jpg') }}" alt="John Doe's face">
-                    <div class="card-title">John Doe</div>
-                    <div class="card-subtitle">Fondateur</div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-info">
-                    <img class="card-avatar" src="{{ url_for('static', filename='img/team_faces/john_doe.jpg') }}" alt="John Doe's face">
-                    <div class="card-title">John Doe</div>
-                    <div class="card-subtitle">Fondateur</div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-info">
-                    <img class="card-avatar" src="{{ url_for('static', filename='img/team_faces/john_doe.jpg') }}" alt="John Doe's face">
-                    <div class="card-title">John Doe</div>
-                    <div class="card-subtitle">Fondateur</div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-info">
-                    <img class="card-avatar" src="{{ url_for('static', filename='img/team_faces/john_doe.jpg') }}" alt="John Doe's face">
-                    <div class="card-title">John Doe</div>
-                    <div class="card-subtitle">Fondateur</div>
-                </div>
-            </div>
+            {% if moniteurs|length > 0 or admins|length > 0 %}
+                {% for moniteur in moniteurs %}
+                    <div class="card">
+                        <div class="card-info">
+                            {% if moniteur.image %}
+                            <img class="card-avatar" src="{{ url_for('static', filename='img/team_faces/john_doe.jpg') }}" alt="John Doe's face">
+                            {% else %}
+                                <div class="card-avatar card-avatar-empty"></div>
+                            {% endif %}
+                            <div class="card-title">{{ moniteur.personne.prenom }} {{ moniteur.personne.nom }}</div>
+                            <div class="card-subtitle">Moniteur</div>
+                        </div>
+                    </div>
+                {% endfor %}
+                
+                {% for adm in admins %}
+                    <div class="card">
+                        <div class="card-info">
+                            {% if adm.image %}
+                                <img class="card-avatar" src="{{ url_for('static', filename='img/team_faces/john_doe.jpg') }}" alt="John Doe's face">
+                            {% else %}
+                                <div class="card-avatar card-avatar-empty"></div>
+                            {% endif %}
+                            <div class="card-title">{{ adm.personne.prenom }} {{ adm.personne.nom }}</div>
+                            <div class="card-subtitle">Administration</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                    <h1>Aucune informations pour le moment...</h1>
+            {% endif %}
         </article>
     </section>
 </main>

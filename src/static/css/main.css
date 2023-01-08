@@ -37,6 +37,10 @@ svg > path{
     fill: white;
 }
 
+.black_svg{
+    stroke: black;
+}
+
 #infos{
     height: 90%;
     margin-left: -5em;
@@ -192,8 +196,7 @@ main h1{
 .input_submit{
     font-family: inherit;
     display: inline-block;
-    padding: 0 1em;
-    height: 2.6em;
+    padding: 0.6em 1em;
     overflow: hidden;
     font-size: 17px;
     z-index: 1;
@@ -494,6 +497,10 @@ footer{
     transition: transform .2s ease;
     margin-bottom: 1rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.card-avatar-empty{
+    background: linear-gradient(to top, #c1f1db 0%, #70e2af 100%);
 }
 
 .card-title {

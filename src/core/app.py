@@ -12,3 +12,4 @@ app.secret_key = urandom(SESSION_KEY_LENGTH)
 login_manager = LoginManager(app)
 
 from .views import *
+from ..models.modeles import *
