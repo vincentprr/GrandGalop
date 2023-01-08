@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'popup.html' %}
+<main>
+    <section>
+        <article>
+            <h1>Votre compte</h1>
+            <div class="dispatcher">
+                <div>
+                    <div class="dispatcher">
+                        <div>
+                            <p>{{ current_user.prenom }} {{ current_user.nom }}</p>
+                            <p>{{ current_user.email }}</p>
+                            <p>{{ current_user.adr }}</p>
+                            <p></p>
+                        </div>
+                        <div>
+                            <p>{{ space_between(current_user.tel, 2) }}</p>
+                            <p>{{ "Cotisation valide TO DO" if current_user.date_cotisation else "Cotisation périmée" }}</p>
+                        </div>
+                    </div>
+                    <button class="input_submit">Modifier</button>
+                </div>
+                
+                <div></div>
+            </div>
+        </article>
+    </section>
+</main>
+{% endblock %}

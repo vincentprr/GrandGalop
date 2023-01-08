@@ -6,7 +6,20 @@ const POPUP = document.getElementById("popup");
 const POPUP_CONTENT = document.getElementById("popup_content");
 
 const LOGIN_FORM = `
+<div class="popup_illus">
+    <img src="{{ url_for('static', filename='img/horse_riding.png') }}" alt="user_illus">
+</div>
+<form class="login_form" method="post" action="{{ url_for('main_js') }}">
+    {{ loginForm.hidden_tag() }}
 
+    {{ loginForm.login(placeholder=loginForm.login.label.text) }}
+    <div class="input_separator_login"></div>
+    {{ loginForm.password(placeholder=loginForm.password.label.text) }}
+    <div class="input_separator_login"></div>
+
+    <div class="input_submit_container"><button class="input_submit">Se connecter</button></div>
+    <p class="login_register_txt">Pas encore de compte ? <a href="{{ url_for('register') }}">Inscrivez vous.</a></p>
+</form>
 `;
 
 function currentScrollYPercentage()
@@ -35,7 +48,7 @@ function dynamicScroll(){
         HEADER_NAV.style.background = "";
 }
 
-function popUp(content, tagName, width = null){
+function popup(content, tagName, width = null){
     if(POPUP != null && POPUP_CONTENT != null){
         // TO DO Change content if not the same source otherwise just print handle it with a tag
         POPUP.style.display = "flex";
@@ -53,15 +66,17 @@ function popUp(content, tagName, width = null){
     }
 }
 
-function closePopUp(){
+function closePopup(){
     if(POPUP != null){
         POPUP.style.display = "none";
         document.body.style.overflow = "";
     }
 }
 
-function loginPopUp(){
-    popUp(LOGIN_FORM, "login", "40%");
+function loginPopup(){
+    {% if not current_user.is_authenticated %}
+        popup(LOGIN_FORM, "login", "30%");
+    {% endif %}
 }
 
 function dynamicalRenders(){

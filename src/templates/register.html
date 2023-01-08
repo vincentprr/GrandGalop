@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'popup.html' %}
+<main>
+    <section>
+        <article>
+            <div class="form_callback">{{ callback }}</div>
+            <h1>Créer votre compte</h1>
+            <div class="dispatcher">
+                <form method="post">
+                    {{ register_form.hidden_tag() }}
+                    {{ register_form.nom(placeholder=register_form.nom.label.text) }}
+                    <div class="input_separator_register"></div>
+                    {{ register_form.prenom(placeholder=register_form.prenom.label.text) }}
+                    <div class="input_separator_register"></div>
+                    {{ register_form.email(placeholder=register_form.email.label.text) }}
+                    <div class="input_separator_register"></div>
+                    {{ register_form.mdp(placeholder=register_form.mdp.label.text) }}
+                    <div class="input_separator_register"></div>
+                    {{ register_form.mdp_verif(placeholder=register_form.mdp_verif.label.text) }}
+                    <div class="input_separator_register"></div>
+                    {{ register_form.adr(placeholder=register_form.adr.label.text) }}
+                    <div class="input_separator_register"></div>
+                    {{ register_form.tel(placeholder=register_form.tel.label.text) }}
+                    <div class="input_separator_register"></div>
+                    <div class="input_separator_register"></div>
+                    <button class="input_submit">S'inscrire</button>
+                </form>
+                <img src="{{ url_for('static', filename='img/register_illus.jpg') }}" alt="Register">
+            </div>
+        </article>
+    </section>
+</main>
+{% endblock %}
