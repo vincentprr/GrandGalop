@@ -6,7 +6,8 @@
         <article>
             <h1>Gérer les poneys</h1>
             <a style="float: right;" class="input_submit" href="{{ url_for('add_poney') }}">Ajouter</a>
-            <br><br><br>
+            <div class="input_separator_register"></div>
+            <div class="input_separator_register"></div>
             <table>
                 <thead>
                     <tr>
@@ -24,7 +25,7 @@
                             <td>{{ poney.taille / 100 }}</td>
                             <td>{{ poney.charge_max / 1000 }}</td>
                             <td>{{ ((today - poney.date_naissance).days / 365.245)|int }}</td>
-                            <td><a style="margin-right: 10px;" class="input_submit" href="">Modifier</a><a class="input_submit" href="">Supprimer</a></td>
+                            <td><a style="margin-right: 10px;" class="input_submit" href="{{ url_for('edit_poney', id=poney.id) }}">Modifier</a><a class="input_submit" href="{{ url_for('delete_poney', id=poney.id) }}">Supprimer</a></td>
                         </tr>
                     {% endfor %}
                 </tbody>

@@ -7,19 +7,17 @@
             <h1>Ajouter un poney</h1>
             <div class="dispatcher">
                 <form method="post" enctype="multipart/form-data">
-                    {{ add_poney_form.hidden_tag() }}
-                    {{ add_poney_form.nom(placeholder=add_poney_form.nom.label.text) }}
+                    {{ edit_form.hidden_tag() }}
+                    {{ edit_form.nom(placeholder=edit_form.nom.label.text, value=poney.nom) }}
                     <div class="input_separator_register"></div>
-                    {{ add_poney_form.charge_max(placeholder=add_poney_form.charge_max.label.text) }}
+                    {{ edit_form.charge_max(placeholder=edit_form.charge_max.label.text, value=poney.charge_max / 1000) }}
                     <div class="input_separator_register"></div>
-                    {{ add_poney_form.date_naissance(placeholder=add_poney_form.date_naissance.label.text) }}
+                    {{ edit_form.date_naissance(placeholder=edit_form.date_naissance.label.text, value=poney.date_naissance) }}
                     <div class="input_separator_register"></div>
-                    {{ add_poney_form.taille(placeholder=add_poney_form.taille.label.text) }}
-                    <div class="input_separator_register"></div>
-                    {{ add_poney_form.img(placeholder=add_poney_form.img.label.text) }}
+                    {{ edit_form.taille(placeholder=edit_form.taille.label.text, value=poney.taille / 100) }}
                     <div class="input_separator_register"></div>
                     <div class="input_separator_register"></div>
-                    <button class="input_submit">Ajouter</button>
+                    <button class="input_submit">Modifier</button>
                 </form>
                 <img src="{{ url_for('static', filename='img/register_illus.jpg') }}" alt="Register">
             </div>

@@ -46,7 +46,7 @@ class LoginForm(FlaskForm):
     login = EmailField("Email", validators=[DataRequired()], render_kw={"class":"input input_login"})
     password = PasswordField("Mot de passe", validators=[DataRequired()], render_kw={"class":"input input_login"})
 
-    def get_authenticated_user(self):
+    def get_authenticated_user(self) -> Personne or None:
         user = get_personne(email=self.login.data)
 
         return user if user is not None and user.mdp == crypt(self.password.data) else None

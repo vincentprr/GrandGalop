@@ -1,8 +1,8 @@
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, request
 from markupsafe import Markup
 from .app import app
 from ..controlers.user_controller import LoginForm, RegisterForm, EditAccountForm, get_admins, get_moniteurs
-from ..controlers.poney_controller import get_poneys
+from ..controlers.poney_controller import get_poneys, AddPoneyForm, del_poney, get_poney_by_id, EditPoneyForm
 from flask_login import current_user, login_user, logout_user, login_required
 from .utils import space_between
 from datetime import date
@@ -72,13 +72,51 @@ def poneys():
 
     return render_template("poneys.html", poneys=get_poneys(), today=date.today())
 
-@app.route("/poneys/add")
+@app.route("/poneys/add", methods=["GET", "POST"])
 @login_required
 def add_poney():
     if not current_user.admin:
         return redirect(url_for("index"))
+
+    add_poney_form = AddPoneyForm()
+
+    if add_poney_form.validate_on_submit():
+        add_poney_form.create_poney(request)
+        return redirect(url_for("poneys"))
     
-    return render_template("add_poney.html")
+    return render_template("add_poney.html", add_poney_form=add_poney_form)
+
+@app.route("/poneys/delete/<int:id>")
+@login_required
+def delete_poney(id):
+    if not current_user.admin:
+        return redirect(url_for("index"))
+
+    poney = get_poney_by_id(id)
+    if poney:
+        del_poney(poney)
+
+    return redirect(url_for("poneys"))
+
+@app.route("/poneys/edit/<int:id>", methods=["GET", "POST"])
+@login_required
+def edit_poney(id):
+    if not current_user.admin:
+        return redirect(url_for("index"))
+    
+    poney = get_poney_by_id(id)
+
+    if poney:
+        edit_form = EditPoneyForm()
+
+        if edit_form.validate_on_submit():
+            edit_form.edit_poney(poney)
+
+            return redirect(url_for("poneys"))
+
+        return render_template("edit_poney.html", poney=poney, edit_form=edit_form)
+
+    return redirect(url_for("index"))
 
 # JS
 @app.route("/js/main", methods=["GET", "POST"])
