@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'popup.html' %}
+<main>
+    <section>
+        <article>
+            <div class="form_callback">{{ callback }}</div>
+            <h1>Modifier un utilisateur</h1>
+            <div class="dispatcher">
+                <form method="post">
+                    {{ edit_form.hidden_tag() }}
+                    {{ edit_form.nom(placeholder=edit_form.nom.label.text, value=user.nom) }}
+                    <div class="input_separator_register"></div>
+                    {{ edit_form.prenom(placeholder=edit_form.prenom.label.text, value=user.prenom) }}
+                    <div class="input_separator_register"></div>
+                    {{ edit_form.email(placeholder=edit_form.email.label.text, value=user.email) }}
+                    <div class="input_separator_register"></div>
+                    {{ edit_form.mdp(placeholder=edit_form.mdp.label.text) }}
+                    <div class="input_separator_register"></div>
+                    {{ edit_form.adr(placeholder=edit_form.adr.label.text, value=user.adr) }}
+                    <div class="input_separator_register"></div>
+                    {{ edit_form.tel(placeholder=edit_form.tel.label.text, value=user.tel) }}
+                    <div class="input_separator_register"></div>
+                    <div class="input_separator_register"></div>
+                    <button class="input_submit">Modifier</button>
+                </form>
+                <img src="{{ url_for('static', filename='img/edit_account_illus.webp') }}" alt="Register">
+            </div>
+        </article>
+    </section>
+</main>
+{% endblock %}

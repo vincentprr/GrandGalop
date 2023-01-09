@@ -1,11 +1,12 @@
 from flask import render_template, redirect, url_for, request
 from markupsafe import Markup
 from .app import app
-from ..controlers.user_controller import LoginForm, RegisterForm, EditAccountForm, get_admins, get_moniteurs
+from ..controlers.user_controller import LoginForm, RegisterForm, EditAccountForm, get_admins, get_moniteurs, get_personnes, AddUserForm, get_personne_by_id, del_user, EditUserForm
 from ..controlers.poney_controller import get_poneys, AddPoneyForm, del_poney, get_poney_by_id, EditPoneyForm
 from flask_login import current_user, login_user, logout_user, login_required
 from .utils import space_between
 from datetime import date
+from .constant import TYPE_CLIENT
 
 @app.route("/index")
 @app.route("/accueil")
@@ -118,6 +119,63 @@ def edit_poney(id):
 
     return redirect(url_for("index"))
 
+@app.route("/users")
+@login_required
+def users():
+    if not current_user.admin:
+        return redirect(url_for("index"))
+
+    return render_template("users.html", users=get_personnes(), space_between=space_between)
+
+@app.route("/users/add", methods=["GET", "POST"])
+@login_required
+def add_user():
+    if not current_user.admin:
+        return redirect(url_for("index"))
+
+    add_user_form = AddUserForm()
+    callback = ""
+
+    if add_user_form.validate_on_submit():
+        callback = add_user_form.add_user(request)
+        if len(callback) == 0:
+            return redirect(url_for("users"))
+    
+    return render_template("add_user.html", add_user_form=add_user_form, callback=callback)
+
+@app.route("/users/delete/<int:id>")
+@login_required
+def delete_user(id):
+    if not current_user.admin:
+        return redirect(url_for("index"))
+
+    user = get_personne_by_id(id)
+    if user:
+        del_user(user)
+
+    return redirect(url_for("users"))
+
+@app.route("/users/edit/<int:id>", methods=["GET", "POST"])
+@login_required
+def edit_user(id):
+    if not current_user.admin:
+        return redirect(url_for("index"))
+    
+    user = get_personne_by_id(id)
+
+    if user:
+        edit_form = EditUserForm()
+        callback = ""
+
+        if edit_form.validate_on_submit():
+            callback = edit_form.edit_user(user)
+            if len(callback) == 0:
+                return redirect(url_for("users"))
+
+        return render_template("edit_user.html", user=user, edit_form=edit_form, callback=callback)
+
+    return redirect(url_for("index"))
+
 # JS
 @app.route("/js/main", methods=["GET", "POST"])
 def main_js():
@@ -132,4 +190,4 @@ def main_js():
         return redirect(url_for("index"))
 
 
-    return render_template("js/main.js", loginForm=login_form)
+    return render_template("js/main.js", loginForm=login_form, TYPE_CLIENT=TYPE_CLIENT)

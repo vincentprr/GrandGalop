@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'popup.html' %}
+<main>
+    <section>
+        <article>
+            <div class="form_callback">{{ callback }}</div>
+            <h1>Créer un utilisateur</h1>
+            <div class="dispatcher">
+                <form method="post">
+                    {{ add_user_form.hidden_tag() }}
+                    {{ add_user_form.nom(placeholder=add_user_form.nom.label.text) }}
+                    <div class="input_separator_register"></div>
+                    {{ add_user_form.prenom(placeholder=add_user_form.prenom.label.text) }}
+                    <div class="input_separator_register"></div>
+                    {{ add_user_form.email(placeholder=add_user_form.email.label.text) }}
+                    <div class="input_separator_register"></div>
+                    {{ add_user_form.mdp(placeholder=add_user_form.mdp.label.text) }}
+                    <div class="input_separator_register"></div>
+                    {{ add_user_form.adr(placeholder=add_user_form.adr.label.text) }}
+                    <div class="input_separator_register"></div>
+                    {{ add_user_form.tel(placeholder=add_user_form.tel.label.text) }}
+                    <div class="input_separator_register"></div>
+                    {{ add_user_form.user_type(style="height: 45px;", onchange="displayUserImage(event)") }}
+                    <div class="input_separator_register"></div>
+                    {{ add_user_form.img() }}
+                    <div class="input_separator_register"></div>
+                    <div class="input_separator_register"></div>
+                    <button class="input_submit">Ajouter</button>
+                </form>
+                <img src="{{ url_for('static', filename='img/edit_account_illus.webp') }}" alt="Register">
+            </div>
+        </article>
+    </section>
+</main>
+{% endblock %}

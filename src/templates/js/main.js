@@ -73,6 +73,18 @@ function closePopup(){
     }
 }
 
+function displayUserImage(event){
+    let type = document.getElementById("user_type");
+    if(type != null){
+        let img = document.getElementById("img");
+        if(img != null)
+            if(event.currentTarget.value != {{ TYPE_CLIENT }})
+                img.style.display = "block";
+            else
+                img.style.display = "none";
+    }
+}
+
 function loginPopup(){
     {% if not current_user.is_authenticated %}
         popup(LOGIN_FORM, "login", "30%");

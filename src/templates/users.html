@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'popup.html' %}
+<main>
+    <section>
+        <article>
+            <h1>Gérer les utilisateurs</h1>
+            <a style="float: right;" class="input_submit" href="{{ url_for('add_user') }}">Ajouter</a>
+            <div class="input_separator_register"></div>
+            <div class="input_separator_register"></div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Identité</th>
+                        <th>Email</th>
+                        <th>Adresse</th>
+                        <th>Téléphone</th>
+                        <th>Role</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.prenom }} {{ user.nom }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.adr }}</td>
+                            <td>{{ space_between(user.tel, 2) }}</td>
+                            {% if user.client %}
+                                <td>Client</td>
+                            {% elif user.moniteur %}
+                                <td>Moniteur</td>
+                            {% else %}
+                                <td>Administration</td>
+                            {% endif %}
+                            <td><a style="margin-right: 10px;" class="input_submit" href="{{ url_for('edit_user', id=user.id) }}">Modifier</a><a class="input_submit" href="{{ url_for('delete_user', id=user.id) }}">Supprimer</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </article>
+    </section>
+</main>
+{% endblock %}
