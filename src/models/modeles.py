@@ -1,1 +1,1 @@
-from . import personne, client, moniteur, admin
+from . import personne, client, moniteur, admin, poney

@@ -535,6 +535,41 @@ footer{
     gap: 50px;
 }
 
+table{
+    border-collapse: collapse;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    overflow: hidden;
+    width: 100%;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+}
+
+thead{
+    background-color: var(--green);
+    color: white;
+    font-weight: normal;
+}
+
+th, td{
+    padding: 5px 20px;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #e4e3e3;
+}
+
+tr > td, tr > th{
+    text-align: center;
+}
+
+tr > td:first-child, tr > th:first-child{
+    text-align: left;
+}
+
+tr > td:last-child, tr > th:last-child{
+    text-align: right;
+}
+
 /* Dynamic */
 .fade-out{
     opacity: 0;

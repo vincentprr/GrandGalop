@@ -2,8 +2,10 @@ from flask import render_template, redirect, url_for
 from markupsafe import Markup
 from .app import app
 from ..controlers.user_controller import LoginForm, RegisterForm, EditAccountForm, get_admins, get_moniteurs
+from ..controlers.poney_controller import get_poneys
 from flask_login import current_user, login_user, logout_user, login_required
 from .utils import space_between
+from datetime import date
 
 @app.route("/index")
 @app.route("/accueil")
@@ -61,6 +63,22 @@ def admin():
         return redirect(url_for("index"))
     
     return render_template("admin.html")
+
+@app.route("/poneys")
+@login_required
+def poneys():
+    if not current_user.admin:
+        return redirect(url_for("index"))
+
+    return render_template("poneys.html", poneys=get_poneys(), today=date.today())
+
+@app.route("/poneys/add")
+@login_required
+def add_poney():
+    if not current_user.admin:
+        return redirect(url_for("index"))
+    
+    return render_template("add_poney.html")
 
 # JS
 @app.route("/js/main", methods=["GET", "POST"])

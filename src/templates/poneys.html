@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'popup.html' %}
+<main>
+    <section>
+        <article>
+            <h1>Gérer les poneys</h1>
+            <a style="float: right;" class="input_submit" href="{{ url_for('add_poney') }}">Ajouter</a>
+            <br><br><br>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Taille (m)</th>
+                        <th>Charge maximale (kg)</th>
+                        <th>Age</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for poney in poneys %}
+                        <tr>
+                            <td>{{ poney.nom }}</td>
+                            <td>{{ poney.taille / 100 }}</td>
+                            <td>{{ poney.charge_max / 1000 }}</td>
+                            <td>{{ ((today - poney.date_naissance).days / 365.245)|int }}</td>
+                            <td><a style="margin-right: 10px;" class="input_submit" href="">Modifier</a><a class="input_submit" href="">Supprimer</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </article>
+    </section>
+</main>
+{% endblock %}
