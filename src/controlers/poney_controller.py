@@ -3,7 +3,7 @@ from ..models.poney import Poney
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from wtforms import StringField, FloatField, DateField, FileField
-from wtforms.validators import DataRequired, Length
+from wtforms.validators import DataRequired
 
 def get_poney_by_id(id) -> Poney:
     return Poney.query.get(id)

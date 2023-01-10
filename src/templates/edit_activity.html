@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'popup.html' %}
+<main>
+    <section>
+        <article>
+            <h1>Modifier un type d'activités</h1>
+            <div class="dispatcher">
+                <form method="post" enctype="multipart/form-data">
+                    {{ edit_form.hidden_tag() }}
+                    {{ edit_form.nom(placeholder=edit_form.nom.label.text, value=type.nom) }}
+                    <div class="input_separator_register"></div>
+                    <div class="input_separator_register"></div>
+                    <button class="input_submit">Modifier</button>
+                </form>
+                <img src="{{ url_for('static', filename='img/register_illus.jpg') }}" alt="Register">
+            </div>
+        </article>
+    </section>
+</main>
+{% endblock %}

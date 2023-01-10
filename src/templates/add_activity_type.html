@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'popup.html' %}
+<main>
+    <section>
+        <article>
+            <h1>Ajouter un type d'activités</h1>
+            <div class="dispatcher">
+                <form method="post" enctype="multipart/form-data">
+                    {{ add_type_form.hidden_tag() }}
+                    {{ add_type_form.nom(placeholder=add_type_form.nom.label.text) }}
+                    <div class="input_separator_register"></div>
+                    <div class="input_separator_register"></div>
+                    <button class="input_submit">Ajouter</button>
+                </form>
+                <img src="{{ url_for('static', filename='img/register_illus.jpg') }}" alt="Ajouter un type d'activité">
+            </div>
+        </article>
+    </section>
+</main>
+{% endblock %}

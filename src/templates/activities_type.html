@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'popup.html' %}
+<main>
+    <section>
+        <article>
+            <h1>Gérer les types d'activités</h1>
+            <a style="float: right;" class="input_submit" href="{{ url_for('add_activity_type') }}">Ajouter</a>
+            <div class="input_separator_register"></div>
+            <div class="input_separator_register"></div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Intitulé</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for type in types %}
+                        <tr>
+                            <td>{{ type.nom }}</td>
+                            <td><a style="margin-right: 10px;" class="input_submit" href="{{ url_for('activities_type_edit', id=type.id) }}">Modifier</a><a class="input_submit" href="{{ url_for('delete_activity_type', id=type.id) }}">Supprimer</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </article>
+    </section>
+</main>
+{% endblock %}
