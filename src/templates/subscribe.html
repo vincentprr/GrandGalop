@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'popup.html' %}
+<main>
+    <section>
+        <article>
+            <h1>Choisissez votre poney</h1>
+            <div class="dispatcher">
+                <form method="post" enctype="multipart/form-data">
+                    {{ subscribe_form.hidden_tag() }}
+                    {{ subscribe_form.poney(style="height: 45px;") }}
+                    <div class="input_separator_register"></div>
+                    <div class="input_separator_register"></div>
+                    <button class="input_submit">M'inscrire</button>
+                </form>
+                <img src="{{ url_for('static', filename='img/register_illus.jpg') }}" alt="Register">
+            </div>
+        </article>
+    </section>
+</main>
+{% endblock %}

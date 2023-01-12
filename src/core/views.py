@@ -3,8 +3,9 @@ from markupsafe import Markup
 from .app import app
 from ..controlers.activities_controller import get_activities_type, EditTypeActiviteForm, get_activity_type_by_id, del_activity_type, AddTypeActivity, get_activities, AddActivityForm, get_activity_by_id, del_activity, EditActivityForm
 from ..controlers.user_controller import LoginForm, RegisterForm, EditAccountForm, get_admins, get_moniteurs, get_personnes, AddUserForm, get_personne_by_id, del_user, EditUserForm
-from ..controlers.poney_controller import get_poneys, AddPoneyForm, del_poney, get_poney_by_id, EditPoneyForm
+from ..controlers.poney_controller import get_poneys, AddPoneyForm, del_poney, get_poney_by_id, EditPoneyForm, get_available_poneys
 from ..controlers.trips_controller import get_trips, AddTripForm, get_trip_by_id, del_trip
+from ..controlers.monter_controller import unsubscribe_cours, SubscribeForm
 from flask_login import current_user, login_user, logout_user, login_required
 from .utils import space_between
 from datetime import date
@@ -340,6 +341,56 @@ def planning():
         return redirect(url_for("index"))
 
     return render_template("planning.html", now=datetime.now())
+
+@app.route("/cours")
+@login_required
+def cours():
+    if not current_user.client:
+        return redirect(url_for("index"))
+
+    trips = []
+    for trip in get_trips():
+        add = True
+        for monter in current_user.client.monter:
+            if monter.sortie.id == trip.id:
+                add = False
+                break
+        if add:
+            trips.append(trip)
+
+    return render_template("cours.html", now=datetime.now(), trips=trips)
+
+@app.route("/unsubscribe/<int:id>")
+@login_required
+def unsubscribe(id):
+    if not current_user.client:
+        return redirect(url_for("index"))
+
+    for m in current_user.client.monter:
+        if m.id_sortie == id:
+            unsubscribe_cours(m)
+            break
+
+    return redirect(url_for("cours"))
+
+@app.route("/subscribe/<int:id>", methods=["GET", "POST"])
+@login_required
+def subscribe(id):
+    if not current_user.client:
+        return redirect(url_for("index"))
+
+    trip = get_trip_by_id(id)
+    if trip:
+        subscribe_form = SubscribeForm()
+        available_poneys = get_available_poneys(trip)
+        subscribe_form.setup_choices(available_poneys)
+
+        if subscribe_form.validate_on_submit():
+            subscribe_form.add(current_user.client, trip, available_poneys)
+        else:
+            return render_template("subscribe.html", subscribe_form=subscribe_form)
+
+    return redirect(url_for("cours"))
 
 # JS
 @app.route("/js/main", methods=["GET", "POST"])

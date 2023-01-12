@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'popup.html' %}
+<main>
+    <section>
+        {% if current_user.client.monter|length > 0 %}
+        <article>
+            <h1>Mon planning</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Date</th>
+                        <th>Durée</th>
+                        <th>Poney</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for monter in current_user.client.monter %}
+                        {% if now <= monter.sortie.date %}
+                            <tr>
+                                <td>{{ monter.sortie.activite.nom }}</td>
+                                <td>{{ monter.sortie.date }}</td>
+                                <td>{{ monter.sortie.duree|to_time_format }}</td>
+                                <td>{{ monter.poney.nom }}</td>
+                                <td><a class="input_submit" href="{{ url_for('unsubscribe', id=monter.id_sortie) }}">Se désinscrire</a></td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </article>
+        {% endif %}
+        <article>
+            <h1>Les cours</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Date</th>
+                        <th>Durée</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for trip in trips %}
+                        {% if now <= trip.date %}
+                            <tr>
+                                <td>{{ trip.activite.nom }}</td>
+                                <td>{{ trip.date }}</td>
+                                <td>{{ trip.duree|to_time_format }}</td>
+                                <td><a class="input_submit" href="{{ url_for('subscribe', id=trip.id) }}">M'inscrire</a></td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </article>
+    </section>
+</main>
+{% endblock %}

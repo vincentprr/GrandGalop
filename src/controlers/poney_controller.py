@@ -1,15 +1,36 @@
 from ..core.database import db
 from ..models.poney import Poney
+from ..models.sortie import Sortie
+from ..core.constant import HORSE_SLEEP_TIME
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from wtforms import StringField, FloatField, DateField, FileField
 from wtforms.validators import DataRequired
+from datetime import timedelta, datetime
 
 def get_poney_by_id(id) -> Poney:
     return Poney.query.get(id)
 
 def get_poneys(**kwargs) -> "list[Poney]":
     return Poney.query.filter_by(**kwargs).all()
+
+def get_available_poneys(sortie:Sortie):
+    res = []
+    now = datetime.now()
+
+    for poney in get_poneys():
+        add = True
+
+        if len(poney.monter) > 0:
+            monter = poney.monter.sort(key=lambda x: x.sortie.date + timedelta(minutes=x.sortie.duree))[0]
+            if monter.sortie.date + timedelta(minutes=monter.sortie.duree, hours=HORSE_SLEEP_TIME) > now:
+                add = False
+                break
+
+        if add:
+            res.append(poney)
+    
+    return res
 
 def create_poney(nom:str, charge_max:int, date_naissance:str, taille:int, img:str):
     db.session.add(Poney(
