@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'popup.html' %}
+<main>
+    <section>
+        <article>
+            <h1>Mon planning</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Date</th>
+                        <th>Durée</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for trip in current_user.moniteur.sorties|sort(attribute='date') %}
+                        {% if now <= trip.date%}
+                            <tr>
+                                <td>{{ trip.activite.nom }}</td>
+                                <td>{{ trip.date }}</td>
+                                <td>{{ trip.duree|to_time_format }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </article>
+    </section>
+</main>
+{% endblock %}

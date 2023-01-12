@@ -9,6 +9,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from .utils import space_between
 from datetime import date
 from .constant import TYPE_CLIENT
+from datetime import datetime
 
 @app.route("/index")
 @app.route("/accueil")
@@ -331,6 +332,14 @@ def delete_trip(id):
         del_trip(trip)
     
     return redirect(url_for("trips"))
+
+@app.route("/planning")
+@login_required
+def planning():
+    if not current_user.moniteur:
+        return redirect(url_for("index"))
+
+    return render_template("planning.html", now=datetime.now())
 
 # JS
 @app.route("/js/main", methods=["GET", "POST"])

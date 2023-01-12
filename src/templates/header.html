@@ -8,6 +8,8 @@
             <a class="navigation_link" href="{{ url_for('account') }}">Mon compte</a>
             {% if current_user.admin %}
                 <a class="navigation_link" href="{{ url_for('admin') }}">Administration</a>
+            {% elif current_user.moniteur %}
+                <a class="navigation_link" href="{{ url_for('planning') }}">Mon planning</a>
             {% endif %}
             <a href="{{ url_for('logout') }}" class="logout">Se déconnecter</a>
         {% else %}
