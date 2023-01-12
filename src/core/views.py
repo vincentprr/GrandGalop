@@ -4,6 +4,7 @@ from .app import app
 from ..controlers.activities_controller import get_activities_type, EditTypeActiviteForm, get_activity_type_by_id, del_activity_type, AddTypeActivity, get_activities, AddActivityForm, get_activity_by_id, del_activity, EditActivityForm
 from ..controlers.user_controller import LoginForm, RegisterForm, EditAccountForm, get_admins, get_moniteurs, get_personnes, AddUserForm, get_personne_by_id, del_user, EditUserForm
 from ..controlers.poney_controller import get_poneys, AddPoneyForm, del_poney, get_poney_by_id, EditPoneyForm
+from ..controlers.trips_controller import get_trips, AddTripForm, get_trip_by_id, del_trip
 from flask_login import current_user, login_user, logout_user, login_required
 from .utils import space_between
 from datetime import date
@@ -238,7 +239,7 @@ def add_activity_type():
     
     return render_template("add_activity_type.html", add_type_form=add_type_form)
 
-@app.route("/activities/all", methods=["GET", "POST"])
+@app.route("/activities/all")
 @login_required
 def activities_list():
     if not current_user.admin:
@@ -293,6 +294,43 @@ def activities_edit(id):
         return render_template("edit_activity.html", activity=activity, edit_form=edit_form)
     
     return redirect(url_for("index"))
+
+@app.route("/trips")
+@login_required
+def trips():
+    if not current_user.admin:
+        return redirect(url_for("index"))
+
+    return render_template("trips.html", trips=get_trips())
+
+@app.route("/trips/add", methods=["GET", "POST"])
+@login_required
+def add_trip():
+    if not current_user.admin:
+        return redirect(url_for("index"))
+
+    callback = ""
+    add_form = AddTripForm()
+    add_form.setup_choices()
+
+    if add_form.validate_on_submit():
+        callback = add_form.add()
+        if len(callback) == 0:
+            return redirect(url_for("trips"))
+    
+    return render_template("add_trip.html", add_form=add_form, callback=callback)
+
+@app.route("/trips/delete/<int:id>")
+@login_required
+def delete_trip(id):
+    if not current_user.admin:
+        return redirect(url_for("index"))
+
+    trip = get_trip_by_id(id)
+    if trip:
+        del_trip(trip)
+    
+    return redirect(url_for("trips"))
 
 # JS
 @app.route("/js/main", methods=["GET", "POST"])

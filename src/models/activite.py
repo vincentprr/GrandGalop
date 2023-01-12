@@ -1,6 +1,5 @@
 from ..core.database import db
-from sqlalchemy import Column, String, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, String
 from sqlalchemy.dialects.mysql import INTEGER, TINYINT
 from ..core.constant import STRING_LITTLE_SIZE, STRING_MAX_SIZE
 from sqlalchemy.orm import backref

@@ -57,7 +57,7 @@ class AddActivityForm(FlaskForm):
     nom = StringField("Nom", validators=[DataRequired()], render_kw={"class":"input input_register"})
     description = TextAreaField("Description", validators=[DataRequired()], render_kw={"class":"input input_register"})
     max_clients = IntegerField("Nombre maximum de clients", validators=[DataRequired()], render_kw={"class":"input input_register"})
-    type_activite = SelectField("Type d'utilisateur", validators=[DataRequired()], choices=[], render_kw={"class":"input input_register"})
+    type_activite = SelectField("Type d'activité", validators=[DataRequired()], choices=[], render_kw={"class":"input input_register"})
 
     def setup_choices(self):
         for type in get_activities_type():
@@ -72,7 +72,7 @@ class EditActivityForm(FlaskForm):
     nom = StringField("Nom", validators=[DataRequired()], render_kw={"class":"input input_register"})
     description = TextAreaField("Description", validators=[DataRequired()], render_kw={"class":"input input_register"})
     max_clients = IntegerField("Nombre maximum de clients", validators=[DataRequired()], render_kw={"class":"input input_register"})
-    type_activite = SelectField("Type d'utilisateur", validators=[DataRequired()], choices=[], render_kw={"class":"input input_register"})
+    type_activite = SelectField("Type d'activité", validators=[DataRequired()], choices=[], render_kw={"class":"input input_register"})
 
     def setup_choices(self, activity:Activite):
         for type in get_activities_type():

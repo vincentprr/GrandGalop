@@ -1,1 +1,1 @@
-from . import personne, client, moniteur, admin, poney, type_activite, activite
+from . import personne, client, moniteur, admin, poney, type_activite, activite, sortie, encadrer

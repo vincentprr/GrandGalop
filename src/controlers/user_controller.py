@@ -12,6 +12,7 @@ from ..core.utils import crypt
 from datetime import datetime
 from flask_login import current_user
 from ..core.constant import TYPE_CLIENT, TYPE_MONITEUR, TYPE_ADMIN
+from datetime import datetime, timedelta
 
 @login_manager.user_loader
 def get_personne_by_id(id : int) -> Personne or None:
@@ -26,8 +27,27 @@ def get_personnes(**kwargs) -> "list[Personne]":
 def get_admins(**kwargs) -> "list[Admin]":
     return Admin.query.filter_by(**kwargs).all()
 
+def get_moniteur_by_id(id : int) -> Moniteur or None:
+    return Moniteur.query.get(id)
+
 def get_moniteurs(**kwargs) -> "list[Moniteur]":
     return Moniteur.query.filter_by(**kwargs).all()
+
+def get_available_moniteurs_ids(date:datetime, duree:int) -> "list[int]":
+    res = set()
+    end_act_date = date + timedelta(minutes=duree)
+
+    for moniteur in get_moniteurs():
+        add = True
+        for sortie in moniteur.sorties:
+            end_datetime = sortie.date + timedelta(minutes=sortie.duree)
+            if (date >= sortie.date and date <= end_datetime) or (end_act_date >= sortie.date and end_act_date <= end_datetime):
+                add = False
+                break
+        if add:
+            res.add(moniteur.id)
+
+    return res
 
 def create_personne(mail:str, password:str, name:str, last_name:str, tel:str, adr:str) -> Personne:
     personne = Personne(

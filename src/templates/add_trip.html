@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'popup.html' %}
+<main>
+    <section>
+        <article>
+            <div class="form_callback">{{ callback }}</div>
+            <h1>Ajouter une sortie</h1>
+            <div class="dispatcher">
+                <form method="post" enctype="multipart/form-data">
+                    {{ add_form.hidden_tag() }}
+                    {{ add_form.activite(style="height: 45px;") }}
+                    <div class="input_separator_register"></div>
+                    {{ add_form.date(placeholder=add_form.date.label.text) }}
+                    <div class="input_separator_register"></div>
+                    {{ add_form.duree(placeholder=add_form.duree.label.text) }}
+                    <div class="input_separator_register"></div>
+                    {{ add_form.moniteur.label() }}
+                    {{ add_form.moniteur() }}
+                    <div class="input_separator_register"></div>
+                    <div class="input_separator_register"></div>
+                    <button class="input_submit">Ajouter</button>
+                </form>
+                <img src="{{ url_for('static', filename='img/register_illus.jpg') }}" alt="Ajouter une sortie">
+            </div>
+        </article>
+    </section>
+</main>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'popup.html' %}
+<main>
+    <section>
+        <article>
+            <h1>Gérer les sorties</h1>
+            <a style="float: right;" class="input_submit" href="{{ url_for('add_trip') }}">Ajouter</a>
+            <div class="input_separator_register"></div>
+            <div class="input_separator_register"></div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Date</th>
+                        <th>Durée</th>
+                        <th>Nombre de moniteurs</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for trip in trips %}
+                        <tr>
+                            <td>{{ trip.activite.nom }}</td>
+                            <td>{{ trip.date }}</td>
+                            <td>{{ trip.duree|to_time_format }}</td>
+                            <td>{{ trip.moniteurs|length }}</td>
+                            <td><a class="input_submit" href="{{ url_for('delete_trip', id=trip.id) }}">Supprimer</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </article>
+    </section>
+</main>
+{% endblock %}
