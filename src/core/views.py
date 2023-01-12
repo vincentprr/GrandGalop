@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, request
 from markupsafe import Markup
 from .app import app
-from ..controlers.activities_controller import get_activities_type, EditTypeActiviteForm, get_activity_type_by_id, del_activity_type, AddTypeActivity
+from ..controlers.activities_controller import get_activities_type, EditTypeActiviteForm, get_activity_type_by_id, del_activity_type, AddTypeActivity, get_activities, AddActivityForm, get_activity_by_id, del_activity, EditActivityForm
 from ..controlers.user_controller import LoginForm, RegisterForm, EditAccountForm, get_admins, get_moniteurs, get_personnes, AddUserForm, get_personne_by_id, del_user, EditUserForm
 from ..controlers.poney_controller import get_poneys, AddPoneyForm, del_poney, get_poney_by_id, EditPoneyForm
 from flask_login import current_user, login_user, logout_user, login_required
@@ -208,23 +208,23 @@ def activities_type_edit(id):
             edit_form.edit(type)
             return redirect(url_for("activities_type"))
 
-        return render_template("edit_activity.html", type=type, edit_form=edit_form)
+        return render_template("edit_activity_type.html", type=type, edit_form=edit_form)
     
     return redirect(url_for("index"))
 
-@app.route("/activities/delete/<int:id>")
+@app.route("/activities/type/delete/<int:id>")
 @login_required
 def delete_activity_type(id):
     if not current_user.admin:
         return redirect(url_for("index"))
 
     type = get_activity_type_by_id(id)
-    if type:
+    if type and len(type.activites) == 0:
         del_activity_type(type)
 
     return redirect(url_for("activities_type"))
 
-@app.route("/activities/add", methods=["GET", "POST"])
+@app.route("/activities/type/add", methods=["GET", "POST"])
 @login_required
 def add_activity_type():
     if not current_user.admin:
@@ -237,6 +237,62 @@ def add_activity_type():
         return redirect(url_for("activities_type"))
     
     return render_template("add_activity_type.html", add_type_form=add_type_form)
+
+@app.route("/activities/all", methods=["GET", "POST"])
+@login_required
+def activities_list():
+    if not current_user.admin:
+        return redirect(url_for("index"))
+
+    return render_template("activities_.html", activities=get_activities())
+
+@app.route("/activities/add", methods=["GET", "POST"])
+@login_required
+def add_activity():
+    if not current_user.admin:
+        return redirect(url_for("index"))
+
+    add_form = AddActivityForm()
+    add_form.setup_choices()
+
+    if add_form.validate_on_submit():
+        add_form.add()
+        return redirect(url_for("activities_list"))
+    
+    return render_template("add_activity.html", add_form=add_form)
+
+@app.route("/activities/delete/<int:id>")
+@login_required
+def delete_activity(id):
+    if not current_user.admin:
+        return redirect(url_for("index"))
+
+    activity = get_activity_by_id(id)
+    if activity:
+        del_activity(activity)
+
+    return redirect(url_for("activities_list"))
+
+@app.route("/activities/edit/<int:id>", methods=["GET", "POST"])
+@login_required
+def activities_edit(id):
+    if not current_user.admin:
+        return redirect(url_for("index"))
+
+    activity = get_activity_by_id(id)
+
+    if activity:
+        edit_form = EditActivityForm()
+        edit_form.setup_choices(activity)
+        edit_form.description.data = activity.description
+
+        if edit_form.validate_on_submit():
+            edit_form.edit(activity)
+            return redirect(url_for("activities_list"))
+
+        return render_template("edit_activity.html", activity=activity, edit_form=edit_form)
+    
+    return redirect(url_for("index"))
 
 # JS
 @app.route("/js/main", methods=["GET", "POST"])

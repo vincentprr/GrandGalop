@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'popup.html' %}
+<main>
+    <section>
+        <article>
+            <h1>Gérer les activités</h1>
+            <a style="float: right;" class="input_submit" href="{{ url_for('add_activity') }}">Ajouter</a>
+            <div class="input_separator_register"></div>
+            <div class="input_separator_register"></div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Nombre maximum de clients</th>
+                        <th>Type d'activité</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for activity in activities %}
+                        <tr>
+                            <td>{{ activity.nom }}</td>
+                            <td>{{ activity.max_clients }}</td>
+                            <td>{{ activity.type_activite.nom }}</td>
+                            <td><a style="margin-right: 10px;" class="input_submit" href="{{ url_for('activities_edit', id=activity.id) }}">Modifier</a><a class="input_submit" href="{{ url_for('delete_activity', id=activity.id) }}">Supprimer</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </article>
+    </section>
+</main>
+{% endblock %}

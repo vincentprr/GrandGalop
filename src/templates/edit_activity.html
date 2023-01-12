@@ -4,16 +4,22 @@
 <main>
     <section>
         <article>
-            <h1>Modifier un type d'activités</h1>
+            <h1>Modifier une activité</h1>
             <div class="dispatcher">
                 <form method="post" enctype="multipart/form-data">
                     {{ edit_form.hidden_tag() }}
-                    {{ edit_form.nom(placeholder=edit_form.nom.label.text, value=type.nom) }}
+                    {{ edit_form.nom(placeholder=edit_form.nom.label.text, value=activity.nom) }}
+                    <div class="input_separator_register"></div>
+                    {{ edit_form.description(placeholder=edit_form.description.label.text) }}
+                    <div class="input_separator_register"></div>
+                    {{ edit_form.max_clients(placeholder=edit_form.max_clients.label.text, value=activity.max_clients) }}
+                    <div class="input_separator_register"></div>
+                    {{ edit_form.type_activite(style="height: 45px;") }}
                     <div class="input_separator_register"></div>
                     <div class="input_separator_register"></div>
                     <button class="input_submit">Modifier</button>
                 </form>
-                <img src="{{ url_for('static', filename='img/register_illus.jpg') }}" alt="Register">
+                <img src="{{ url_for('static', filename='img/register_illus.jpg') }}" alt="Modifier une activité">
             </div>
         </article>
     </section>

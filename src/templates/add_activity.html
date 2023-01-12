@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'popup.html' %}
+<main>
+    <section>
+        <article>
+            <h1>Ajouter une activité</h1>
+            <div class="dispatcher">
+                <form method="post" enctype="multipart/form-data">
+                    {{ add_form.hidden_tag() }}
+                    {{ add_form.nom(placeholder=add_form.nom.label.text) }}
+                    <div class="input_separator_register"></div>
+                    {{ add_form.description(placeholder=add_form.description.label.text) }}
+                    <div class="input_separator_register"></div>
+                    {{ add_form.max_clients(placeholder=add_form.max_clients.label.text) }}
+                    <div class="input_separator_register"></div>
+                    {{ add_form.type_activite(style="height: 45px;") }}
+                    <div class="input_separator_register"></div>
+                    <div class="input_separator_register"></div>
+                    <button class="input_submit">Ajouter</button>
+                </form>
+                <img src="{{ url_for('static', filename='img/register_illus.jpg') }}" alt="Ajouter une activité">
+            </div>
+        </article>
+    </section>
+</main>
+{% endblock %}
